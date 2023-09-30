@@ -1,4 +1,22 @@
 import { useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
+
+const CREATE_BOOK = gql`
+mutation createBook($title: String!, $author: String, $published: Int, $genres: [String!]!) {
+  addBook(
+    title: $title,
+    author: $author,
+    published: $published,
+    genres: $genres
+  ) {
+    title
+    author
+    published
+    genres
+    id
+  }
+}
+`
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -11,8 +29,12 @@ const NewBook = (props) => {
     return null
   }
 
+  const [ createBook ] = useMutation(CREATE_BOOK)
+
   const submit = async (event) => {
     event.preventDefault()
+
+    createBook({  variables: { title, author, published, genres } })
 
     console.log('add book...')
 
