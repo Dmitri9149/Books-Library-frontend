@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import {
+  BrowserRouter as Router
+} from 'react-router-dom'
 // import './index.css'
 
 import {
@@ -14,6 +17,7 @@ import {
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
   cache: new InMemoryCache(),
+//  connectToDevTools: true
 })
 
 const query = gql`
@@ -33,7 +37,9 @@ client.query({ query })
   })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+    <ApolloProvider client={client}>
+        <Router> 
+          <App />
+        </Router> 
+    </ApolloProvider>
 )

@@ -18,16 +18,12 @@ mutation createBook($title: String!, $author: String!, $publishedNumber: Int!, $
 }
 `
 
-const NewBook = (props) => {
+const NewBook = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
-
-//  if (!props.show) {
-//    return null
-//  }
 
   const [ createBook ] = useMutation(CREATE_BOOK)
 

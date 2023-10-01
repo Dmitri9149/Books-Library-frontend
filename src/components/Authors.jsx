@@ -1,7 +1,4 @@
-const Authors = ({show, authors}) => {
-  if (!show) {
-    return null
-  }
+const Authors = ({authors}) => {
   
   return (
     <div>
