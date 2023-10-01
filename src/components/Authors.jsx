@@ -72,7 +72,7 @@ const Authors = ({authors}) => {
               onChange={({ target }) => setBorn(target.value)}
             />
           </div>
-          <button type="submit">create book</button>
+          <button type="submit">update author</button>
         </form>
       </div>      
     </div>
