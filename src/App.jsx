@@ -7,7 +7,7 @@ import {
   Routes, Route, Link
 } from 'react-router-dom'
 
-const ALL_AUTHORS = gql`
+export const ALL_AUTHORS = gql`
 query {
   allAuthors {
     name
@@ -18,7 +18,7 @@ query {
 }
 `
 
-const ALL_BOOKS = gql`
+export const ALL_BOOKS = gql`
 query {
   allBooks {
     title
