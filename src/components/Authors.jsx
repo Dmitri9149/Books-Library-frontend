@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
+import { format } from 'react-string-format'
 
 import {ALL_AUTHORS, ALL_BOOKS} from '../App'
 
@@ -19,6 +20,8 @@ const Authors = ({authors}) => {
   const [author, setAuthor] = useState('')
   const [born, setBorn] = useState('')
 
+  console.log("Author", author)
+
   const [ setBornTo ] = useMutation(SET_BORN_TO, {
     refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ]
   })
@@ -34,6 +37,12 @@ const Authors = ({authors}) => {
     setBorn('')
     setAuthor('')
   }
+
+  const authorsNoBirthData = authors
+    .filter( a => a.born === null)
+    .map(a => <option key={a.id} value={a.name}>{a.name}</option>)
+
+    console.log("AuthorsNoBirth", authorsNoBirthData)
   
   return (
     <div>
@@ -56,7 +65,32 @@ const Authors = ({authors}) => {
       </table>
       <div>
         <h2> Set birth year</h2>
+        <select 
+          value={author}
+          name="selectedAuthor"
+          onChange={e => setAuthor(e.target.value)}>
+          {
+            authors
+              .filter( a => a.born === null)
+              .map(a => (
+                <option key={a.id} value={a.name}>{`${a.name}`}</option>
+                ))
+          }
+        </select>
         <form onSubmit={submit}>
+        <select 
+          value={author}
+          name="selectedAuthor"
+          onChange={e => setAuthor(e.target.value)}>
+          {
+            authors
+              .filter( a => a.born === null)
+              .map(a => (
+                <option key={a.id} value={a.name}>{`${a.name}`}</option>
+                ))
+          }
+        </select>
+
           <div>
             author name 
             <input
