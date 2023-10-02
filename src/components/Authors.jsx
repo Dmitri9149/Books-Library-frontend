@@ -20,8 +20,6 @@ const Authors = ({authors}) => {
   const [author, setAuthor] = useState('')
   const [born, setBorn] = useState('')
 
-  console.log("Author", author)
-
   const [ setBornTo ] = useMutation(SET_BORN_TO, {
     refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ]
   })
@@ -41,8 +39,6 @@ const Authors = ({authors}) => {
   const authorsNoBirthData = authors
     .filter( a => a.born === null)
     .map(a => <option key={a.id} value={a.name}>{a.name}</option>)
-
-    console.log("AuthorsNoBirth", authorsNoBirthData)
   
   return (
     <div>
@@ -65,38 +61,22 @@ const Authors = ({authors}) => {
       </table>
       <div>
         <h2> Set birth year</h2>
-        <select 
-          value={author}
-          name="selectedAuthor"
-          onChange={e => setAuthor(e.target.value)}>
-          {
-            authors
-              .filter( a => a.born === null)
-              .map(a => (
-                <option key={a.id} value={a.name}>{`${a.name}`}</option>
-                ))
-          }
-        </select>
-        <form onSubmit={submit}>
-        <select 
-          value={author}
-          name="selectedAuthor"
-          onChange={e => setAuthor(e.target.value)}>
-          {
-            authors
-              .filter( a => a.born === null)
-              .map(a => (
-                <option key={a.id} value={a.name}>{`${a.name}`}</option>
-                ))
-          }
-        </select>
-
+        <form onSubmit={submit} defaultValue="select name">
           <div>
-            author name 
-            <input
+            <select 
               value={author}
-              onChange={({ target }) => setAuthor(target.value)}
-            />
+              name="selectedAuthor"
+              onChange={e => setAuthor(e.target.value)}
+            >
+              <option value="">select name</option>
+              {
+                authors
+                  .filter( a => a.born === null)
+                  .map(a => (
+                    <option key={a.id} value={a.name}>{`${a.name}`}</option>
+                    ))
+              }
+            </select>
           </div>
           <div>
             born
