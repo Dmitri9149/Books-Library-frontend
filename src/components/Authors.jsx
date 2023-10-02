@@ -30,8 +30,6 @@ const Authors = ({authors}) => {
 
     setBornTo({  variables: { author, bornInYear } })
 
-    console.log('set born...')
-
     setBorn('')
     setAuthor('')
   }
@@ -69,13 +67,7 @@ const Authors = ({authors}) => {
               onChange={e => setAuthor(e.target.value)}
             >
               <option value="">select name</option>
-              {
-                authors
-                  .filter( a => a.born === null)
-                  .map(a => (
-                    <option key={a.id} value={a.name}>{`${a.name}`}</option>
-                    ))
-              }
+              {authorsNoBirthData}
             </select>
           </div>
           <div>
