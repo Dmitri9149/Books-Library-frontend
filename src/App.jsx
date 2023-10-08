@@ -22,8 +22,12 @@ export const ALL_BOOKS = gql`
 query {
   allBooks {
     title
-    author
     published
+    author { 
+      name
+      born 
+      bookCount
+     }
     id
   }
 }
@@ -38,6 +42,9 @@ const App = () => {
   if (resultAuthors.loading || resultBooks.loading) {
     return <div>loading...</div>
   }
+
+  console.log("resultAuthors data", resultAuthors.data)
+  console.log("resultBooks data", resultBooks.data)
 
   const padding = {
     padding: 5
