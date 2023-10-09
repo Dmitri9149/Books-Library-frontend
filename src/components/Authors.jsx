@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { format } from 'react-string-format'
 
 import {ALL_AUTHORS, ALL_BOOKS} from '../App'
 
