@@ -57,7 +57,7 @@ const Authors = ({authors}) => {
         </tbody>
       </table>
       <div>
-        <h2> Set birth year</h2>
+        <h3> Set birth year</h3>
         <form onSubmit={submit} defaultValue="select name">
           <div>
             <select 
