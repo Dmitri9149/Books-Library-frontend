@@ -36,8 +36,7 @@ query {
 const App = () => {
 
   const resultAuthors = useQuery(ALL_AUTHORS)
-  const resultBooks = useQuery(ALL_BOOKS)
-
+  const resultBooks  = useQuery(ALL_BOOKS)
 
   if (resultAuthors.loading || resultBooks.loading) {
     return <div>loading...</div>
@@ -45,6 +44,18 @@ const App = () => {
 
   console.log("resultAuthors data", resultAuthors.data)
   console.log("resultBooks data", resultBooks.data)
+
+  const flattenBooks = resultBooks.data.allBooks.map(b => 
+    { const { title, published, author } = b   
+      const bookFlatten = { 
+        title, 
+        published, 
+        bookCount: author.bookCount,
+        authorName: author.name,
+        authorBorn: author.born
+      }
+      return bookFlatten
+    } )
 
   const padding = {
     padding: 5
@@ -60,7 +71,7 @@ const App = () => {
 
       <Routes>
         <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
-        <Route path="/books" element={<Books books={resultBooks.data.allBooks} />} />
+        <Route path="/books" element={<Books books={ flattenBooks } />} />
         <Route path="/add_book" element={<NewBook />} />
       </Routes>
     </div>
