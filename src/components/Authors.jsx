@@ -5,7 +5,7 @@ import {ALL_AUTHORS, ALL_BOOKS} from '../App'
 
 const SET_BORN_TO = gql`
 mutation setBornTo($author: String!, $bornInYear: Int!) {
-  editAuthor(name:$author, setBornTo:$bornInYear
+  editAuthor(name:$author, born:$bornInYear
     ) {
       name
       born
