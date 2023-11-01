@@ -39,16 +39,6 @@ const App = () => {
     }, 10000)
   }
 
-  if (!token) {
-    return (
-      <>
-        <h2>Login</h2>
-        <Notify errorMessage={errorMessage} />
-        <LoginForm setToken={setToken} setError={notify} />
-      </>
-    )
-  }
-
   if (resultAuthors.loading || resultBooks.loading) {
     return <div>loading...</div>
   }
@@ -79,28 +69,57 @@ const App = () => {
     padding: 5
   }
 
+  const loginView = () => {
+    return (
+      <div>
+        <Notify errorMessage={errorMessage} />
+        <div>
+          <Link style={padding} to="/authors">authors</Link>
+          <Link style={padding} to="/books">books</Link>
+          <Link style={padding} to="/">login</Link>
+        </div>
+        <Routes>
+          <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
+          <Route path="/books" element={<Books books={ flattenBooks } />} />
+          <Route path="/" element={<LoginForm setToken={setToken} setError={notify} />} />
+        </Routes>
+      </div>
+    )
+  }
+
+  const userView = () => {
+    return (
+      <div>
+        <Notify errorMessage={errorMessage} />
+        <div>
+          <Link style={padding} to="/add_book">new book</Link>
+          <Link style={padding} to="/authors">authors</Link>
+          <Link style={padding} to="/books">books</Link>
+          <Link style={padding} to="/logout">logout</Link>
+        </div>
+
+        <Routes>
+          <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
+          <Route path="/books" element={<Books books={ flattenBooks } />} />
+          <Route path="/add_book" element={<NewBook />} />
+          <Route path="/logout" element={
+            <div>
+              <h2>Logout</h2>
+              <button onClick={logout}>logout</button>
+              </div>} />
+        </Routes>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <Notify errorMessage={errorMessage} />
-      <div>
-        <Link style={padding} to="/add_book">new book</Link>
-        <Link style={padding} to="/authors">authors</Link>
-        <Link style={padding} to="/books">books</Link>
-        <Link style={padding} to="/logout">logout</Link>
-      </div>
-
-      <Routes>
-        <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
-        <Route path="/books" element={<Books books={ flattenBooks } />} />
-        <Route path="/add_book" element={<NewBook />} />
-        <Route path="/logout" element={
-          <div>
-            <h2>Logout</h2>
-            <button onClick={logout}>logout</button>
-            </div>} />
-      </Routes>
+      { 
+        !token
+        ? loginView()
+        : userView()
+      }
     </div>
-
   )
 }
 
