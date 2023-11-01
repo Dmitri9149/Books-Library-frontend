@@ -6,7 +6,7 @@ import LoginForm from './components/LoginForm'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route, Link, useNavigate
 } from 'react-router-dom'
 
 import {ALL_AUTHORS, ALL_BOOKS} from './queries'
@@ -23,6 +23,7 @@ const Notify = ({errorMessage}) => {
 }
 
 const App = () => {
+  const navigate = useNavigate()
 
   const [token, setToken] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -31,14 +32,32 @@ const App = () => {
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
 
+  const notify = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
+  }
+
+  if (!token) {
+    return (
+      <>
+        <h2>Login</h2>
+        <Notify errorMessage={errorMessage} />
+        <LoginForm setToken={setToken} setError={notify} />
+      </>
+    )
+  }
+
   if (resultAuthors.loading || resultBooks.loading) {
     return <div>loading...</div>
   }
-
+  
   const logout = () => {
     setToken(null)
     localStorage.clear()
     client.resetStore()
+    navigate("/")
   }
 
   console.log("resultAuthors data", resultAuthors.data)
@@ -60,13 +79,6 @@ const App = () => {
     padding: 5
   }
 
-  const notify = (message) => {
-    setErrorMessage(message)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 10000)
-  }
-
   return (
     <div>
       <Notify errorMessage={errorMessage} />
@@ -74,7 +86,6 @@ const App = () => {
         <Link style={padding} to="/add_book">new book</Link>
         <Link style={padding} to="/authors">authors</Link>
         <Link style={padding} to="/books">books</Link>
-        <Link style={padding} to="/login">login</Link>
         <Link style={padding} to="/logout">logout</Link>
       </div>
 
@@ -82,10 +93,11 @@ const App = () => {
         <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={ flattenBooks } />} />
         <Route path="/add_book" element={<NewBook />} />
-        <Route path="/logout" element={<button onClick={logout}>logout</button>} />
-        <Route path="login" element={<LoginForm 
-                                        setToken={setToken}
-                                        setError={notify} />} />
+        <Route path="/logout" element={
+          <div>
+            <h2>Logout</h2>
+            <button onClick={logout}>logout</button>
+            </div>} />
       </Routes>
     </div>
 
