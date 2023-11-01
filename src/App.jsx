@@ -3,7 +3,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useApolloClient } from '@apollo/client'
 import {
   BrowserRouter as Router,
   Routes, Route, Link
@@ -27,11 +27,18 @@ const App = () => {
   const [token, setToken] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  const client = useApolloClient()
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
 
   if (resultAuthors.loading || resultBooks.loading) {
     return <div>loading...</div>
+  }
+
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
   }
 
   console.log("resultAuthors data", resultAuthors.data)
@@ -68,12 +75,14 @@ const App = () => {
         <Link style={padding} to="/authors">authors</Link>
         <Link style={padding} to="/books">books</Link>
         <Link style={padding} to="/login">login</Link>
+        <Link style={padding} to="/logout">logout</Link>
       </div>
 
       <Routes>
         <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={ flattenBooks } />} />
         <Route path="/add_book" element={<NewBook />} />
+        <Route path="/logout" element={<button onClick={logout}>logout</button>} />
         <Route path="login" element={<LoginForm 
                                         setToken={setToken}
                                         setError={notify} />} />
