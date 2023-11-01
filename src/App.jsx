@@ -11,6 +11,9 @@ import {ALL_AUTHORS, ALL_BOOKS} from './queries'
 
 const App = () => {
 
+  const [token, setToken] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
 
