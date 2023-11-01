@@ -47,6 +47,7 @@ const App = () => {
         <Link style={padding} to="/add_book">new book</Link>
         <Link style={padding} to="/authors">authors</Link>
         <Link style={padding} to="/books">books</Link>
+        <Link style={padding} to="/login">login</Link>
       </div>
 
       <Routes>
