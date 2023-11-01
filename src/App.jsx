@@ -28,6 +28,8 @@ const App = () => {
   const [token, setToken] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  console.log("Token", token)
+
   const client = useApolloClient()
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
@@ -47,7 +49,7 @@ const App = () => {
     setToken(null)
     localStorage.clear()
     client.resetStore()
-    navigate("/")
+    navigate('/')
   }
 
   console.log("resultAuthors data", resultAuthors.data)
