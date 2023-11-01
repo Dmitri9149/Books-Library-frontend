@@ -7,31 +7,7 @@ import {
   Routes, Route, Link
 } from 'react-router-dom'
 
-export const ALL_AUTHORS = gql`
-query {
-  allAuthors {
-    name
-    born
-    bookCount
-    id
-  }
-}
-`
-
-export const ALL_BOOKS = gql`
-query {
-  allBooks {
-    title
-    published
-    author { 
-      name
-      born 
-      bookCount
-     }
-    id
-  }
-}
-`
+import {ALL_AUTHORS, ALL_BOOKS} from './queries'
 
 const App = () => {
 
