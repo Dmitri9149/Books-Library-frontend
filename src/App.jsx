@@ -11,6 +11,17 @@ import {
 
 import {ALL_AUTHORS, ALL_BOOKS} from './queries'
 
+const Notify = ({errorMessage}) => {
+  if ( !errorMessage ) {
+    return null
+  }
+  return (
+    <div style={{color: 'red'}}>
+      {errorMessage}
+    </div>
+  )
+}
+
 const App = () => {
 
   const [token, setToken] = useState(null)
@@ -51,6 +62,7 @@ const App = () => {
 
   return (
     <div>
+      <Notify errorMessage={errorMessage} />
       <div>
         <Link style={padding} to="/add_book">new book</Link>
         <Link style={padding} to="/authors">authors</Link>
