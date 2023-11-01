@@ -42,6 +42,13 @@ const App = () => {
     padding: 5
   }
 
+  const notify = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
+  }
+
   return (
     <div>
       <div>
@@ -55,6 +62,9 @@ const App = () => {
         <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={ flattenBooks } />} />
         <Route path="/add_book" element={<NewBook />} />
+        <Route path="login" element={<LoginForm 
+                                        setToken={setToken}
+                                        setError={notify} />} />
       </Routes>
     </div>
 
