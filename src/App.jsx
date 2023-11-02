@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import { gql, useQuery, useApolloClient } from '@apollo/client'
 import {
@@ -78,12 +79,14 @@ const App = () => {
         <div>
           <Link style={padding} to="/authors">authors</Link>
           <Link style={padding} to="/books">books</Link>
-          <Link style={padding} to="/">login</Link>
+          <Link style={padding} to="/login">login</Link>
+          <Link style={padding} to="/">home</Link>
         </div>
         <Routes>
+          <Route path="/" element={<Home/>} /> 
           <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
           <Route path="/books" element={<Books books={ flattenBooks } />} />
-          <Route path="/" element={<LoginForm setToken={setToken} setError={notify} />} />
+          <Route path="/login" element={<LoginForm setToken={setToken} setError={notify} />} />
         </Routes>
       </div>
     )
