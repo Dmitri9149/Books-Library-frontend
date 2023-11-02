@@ -57,13 +57,14 @@ const App = () => {
   console.log("resultBooks data", resultBooks.data)
 
   const flattenBooks = resultBooks.data.allBooks.map(b => 
-    { const { title, published, author } = b   
+    { const { title, published, author, genres } = b   
       const bookFlatten = { 
         title, 
         published, 
         bookCount: author.bookCount,
         authorName: author.name,
-        authorBorn: author.born
+        authorBorn: author.born,
+        genres
       }
       return bookFlatten
     } )

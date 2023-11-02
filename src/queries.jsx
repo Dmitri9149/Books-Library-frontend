@@ -21,6 +21,7 @@ query {
       born 
       bookCount
      }
+     genres
     id
   }
 }
