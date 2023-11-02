@@ -18,7 +18,9 @@ const NewBook = () => {
     event.preventDefault()
     const publishedNumber = Number(published)
 
-    createBook({  variables: { title, author, publishedNumber, genres } })
+    console.log("PUBLISHED NUMBER", publishedNumber, title, author, genres)
+
+    await createBook({  variables: { title, author, publishedNumber, genres } })
 
     console.log('add book...')
 
