@@ -1,9 +1,29 @@
 import { useQuery } from '@apollo/client'
-import { USER } from '../queries'
-const RecommendedToUser = ({books, favoriteGenre}) => {
-  const user = useQuery(USER)
-  console.log("Recommended USER", user)
-  const booksToShow = books.filter(book => book.genres.some(g => g === favoriteGenre))
+import { BOOKS_IN_GENRE } from '../queries'
+const RecommendedToUser = ({favoriteGenre}) => {
+  const genre = favoriteGenre
+  const resultBooks = useQuery(BOOKS_IN_GENRE, 
+    {variables: {genre}})
+
+
+  if (resultBooks.loading) {
+    return <div>loading...</div>
+  }
+
+  const flattenBooks = resultBooks.data.allBooks.map(b => 
+    { const { title, published, author, genres } = b   
+      const bookFlatten = { 
+        title, 
+        published, 
+        bookCount: author.bookCount,
+        authorName: author.name,
+        authorBorn: author.born,
+        genres
+      }
+      return bookFlatten
+    } )
+
+
 
   return (
     <div>
@@ -17,7 +37,7 @@ const RecommendedToUser = ({books, favoriteGenre}) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {booksToShow.map((b) => (
+          {flattenBooks.map((b) => (
             <tr key={b.title}>
               <td>{b.title}</td>
               <td>{b.authorName}</td>

@@ -114,8 +114,7 @@ const App = () => {
           <Route path="/authors" element={<Authors authors={resultAuthors.data.allAuthors}/>} />
           <Route path="/books" element={<Books books={ flattenBooks } />} />
           <Route path="/recommend" element={
-            <RecommendedToUser 
-              books={ flattenBooks } 
+            <RecommendedToUser  
               favoriteGenre={user.data.me.favoriteGenre} />} />
           <Route path="/add_book" element={<NewBook />} />
           <Route path="/logout" element={
