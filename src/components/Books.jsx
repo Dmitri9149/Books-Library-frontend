@@ -8,8 +8,7 @@ const Books = ({books}) => {
   const getGenres = books.map(b => b.genres).flat()
 // from https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
   const allGenres = [...new Set(getGenres)].concat(['all genres']) 
-//  const booksToShow = books.filter(book => genre === 'all genres' ?book :book.genres.some(g => g === genre))
- console.log("allGenres!!!!!!!!!", allGenres, getGenres)
+  console.log("allGenres!!!!!!!!!", allGenres, getGenres)
   console.log("Genre", genre)
 
   const resultBooks = useQuery(BOOKS_IN_GENRE, 
@@ -34,10 +33,7 @@ const Books = ({books}) => {
       }
       return bookFlatten
     } )
-
-//    const getGenres = flattenBooks.map(b => b.genres).flat()
-//    const allGenres = [...new Set(getGenres)].concat(['all genres']) 
-
+ 
   return (
     <div>
       <h2>books</h2>
