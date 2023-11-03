@@ -37,7 +37,7 @@ const App = () => {
 
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
-  const user = useQuery(USER,  { pollInterval: 2000})
+  const user = useQuery(USER,  {skip: !token} )
 
   const notify = (message) => {
     setErrorMessage(message)
@@ -46,7 +46,7 @@ const App = () => {
     }, 10000)
   }
 
-  if (resultAuthors.loading || resultBooks.loading) {
+  if (resultAuthors.loading || resultBooks.loading || user.loading ) {
     return <div>loading...</div>
   }
   
