@@ -59,7 +59,7 @@ const App = () => {
 
   console.log("resultAuthors data", resultAuthors.data)
   console.log("resultBooks data", resultBooks.data)
-  console.log("result USER data", user)
+  console.log("result USER data", user.data)
 
   const flattenBooks = resultBooks.data.allBooks.map(b => 
     { const { title, published, author, genres } = b   
@@ -127,18 +127,12 @@ const App = () => {
     )
   }
 
-  const waitView = () => {
-    return (
-      <div> Wait !! </div>
-    )
-  }
-
   return (
     <div>
       { 
-        token 
-        ? user.data.me ? userView() : waitView()
-        : loginView()   
+        !token 
+        ? loginView()
+        : userView()   
       }
     </div>
   )
