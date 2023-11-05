@@ -36,7 +36,8 @@ const App = () => {
 
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
-      console.log("The data from APP !!!!!!!!!!!", data)
+      console.log("The data from APP %s ++++ !!!!!!!!!!!", data.data.bookAdded.title)
+      window.alert("New book is added !" + data.data.bookAdded.title)
     }
   })
 
