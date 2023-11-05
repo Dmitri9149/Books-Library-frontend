@@ -96,6 +96,23 @@ query {
 }
 `
 
+const BOOK_DETAILS = gql`
+  fragment BookDetails on Book 
+    {
+    title
+    author 
+    {
+      name
+      born
+      id
+      bookCount
+    }
+    published
+    genres
+    id
+  }
+`
+
 export const BOOK_ADDED = gql`
   subscription {
     bookAdded {

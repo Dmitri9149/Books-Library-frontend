@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { gql, useQuery, useApolloClient } from '@apollo/client'
+import { gql, useQuery, useSubscription, useApolloClient } from '@apollo/client'
 import {
   BrowserRouter as Router,
   Routes, Route, Link, useNavigate
@@ -11,7 +11,7 @@ import NewBook from './components/NewBook'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import RecommendedToUser from './components/RecommendedToUser'
-import { ALL_AUTHORS, ALL_BOOKS, USER } from './queries'
+import { ALL_AUTHORS, ALL_BOOKS, USER, BOOK_ADDED } from './queries'
 
 const Notify = ({errorMessage}) => {
   if ( !errorMessage ) {
@@ -34,6 +34,11 @@ const App = () => {
 
   console.log("Token", token)
 
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      console.log("The data from APP !!!!!!!!!!!", data)
+    }
+  })
 
   const resultAuthors = useQuery(ALL_AUTHORS)
   const resultBooks  = useQuery(ALL_BOOKS)
