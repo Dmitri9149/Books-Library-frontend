@@ -24,6 +24,24 @@ const Notify = ({errorMessage}) => {
   )
 }
 
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {
+  // helper that is used to eliminate saving same person twice
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.title
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByName(allBooks.concat(addedBook)),
+    }
+  })
+}
+
 const App = () => {
   const navigate = useNavigate()
 
@@ -37,7 +55,8 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
       console.log("The data from APP %s ++++ !!!!!!!!!!!", data.data.bookAdded.title)
-      window.alert("New book is added !" + data.data.bookAdded.title)
+      window.alert("New book is added: " + data.data.bookAdded.title)
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
     }
   })
 
