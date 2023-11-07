@@ -54,8 +54,10 @@ const App = () => {
 
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
-      console.log("The data from APP %s ++++ !!!!!!!!!!!", data.data.bookAdded.title)
-      window.alert("New book is added: " + data.data.bookAdded.title)
+      const addedBook = data.data.bookAdded
+      console.log("The data from APP %s ++++ !!!!!!!!!!!", addedBook.title)
+      window.alert("New book is added: " + addedBook.title)
+      notify(`${addedBook.title} added`)
       updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
     }
   })
@@ -141,7 +143,7 @@ const App = () => {
           <Route path="/recommend" element={
             <RecommendedToUser  
               favoriteGenre={user.data.me.favoriteGenre} />} />
-          <Route path="/add_book" element={<NewBook />} />
+          <Route path="/add_book" element={<NewBook setError={notify}/>} />
           <Route path="/logout" element={
             <div>
               <h2>Logout</h2>
