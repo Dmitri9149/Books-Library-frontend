@@ -4,7 +4,6 @@ import App from './App.jsx'
 import {
   BrowserRouter as Router
 } from 'react-router-dom'
-// import './index.css'
 
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink,
   split 
@@ -47,7 +46,6 @@ const splitLink = split(
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-//  link: authLink.concat(httpLink)
   link: splitLink
 })
 
